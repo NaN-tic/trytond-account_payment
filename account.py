@@ -24,8 +24,8 @@ class MoveLine:
             states={
                 'invisible': ~Eval('payment_kind'),
                 },
-            depends=['payment_kind']), 'get_payment_amount',
-        searcher='search_payment_amount')
+            depends=['payment_kind', 'second_currency_digits', 'currency_digits']), 
+            'get_payment_amount', searcher='search_payment_amount')
     payments = fields.One2Many('account.payment', 'line', 'Payments',
         readonly=True,
         states={

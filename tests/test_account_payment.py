@@ -25,7 +25,7 @@ class AccountPaymentTestCase(unittest.TestCase):
         '''
         Test views.
         '''
-        test_view('bank')
+        test_view('account_payment')
 
     def test0006depends(self):
         '''

@@ -139,7 +139,7 @@ class Payment(Workflow, ModelSQL, ModelView):
             ('move_state', '=', 'posted'),
             ],
         on_change=['line'],
-        states=_STATES, depends=_DEPENDS + ['party', 'currency'])
+        states=_STATES, depends=_DEPENDS + ['party', 'currency', 'kind'])
     description = fields.Char('Description', states=_STATES, depends=_DEPENDS)
     group = fields.Many2One('account.payment.group', 'Group', readonly=True,
         ondelete='RESTRICT',
