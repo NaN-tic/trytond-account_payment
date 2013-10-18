@@ -2,7 +2,7 @@
 #this repository contains the full copyright notices and license terms.
 from sql.aggregate import Sum
 from sql.conditionals import Case, Coalesce
-from sql.operators import Abs
+from sql.functions import Abs
 
 from trytond.pool import Pool, PoolMeta
 from trytond.model import fields
@@ -24,8 +24,9 @@ class MoveLine:
             states={
                 'invisible': ~Eval('payment_kind'),
                 },
-            depends=['payment_kind', 'second_currency_digits', 'currency_digits']), 
-            'get_payment_amount', searcher='search_payment_amount')
+            depends=['payment_kind', 'second_currency_digits',
+                'currency_digits']), 'get_payment_amount',
+        searcher='search_payment_amount')
     payments = fields.One2Many('account.payment', 'line', 'Payments',
         readonly=True,
         states={
@@ -66,29 +67,35 @@ class MoveLine:
         table = cls.__table__()
         payment = Payment.__table__()
         account = Account.__table__()
-        query_table = table.join(payment, type_='LEFT', condition=(
-                (table.id == payment.line) & (payment.state != 'failed'))
-        ).join(account, condition=table.account == account.id)
-        main_payable = (table.credit - table.debit) - Sum(
-            Coalesce(payment.amount, 0))
-        main_receivable = (table.debit - table.credit) - Sum(
-            Coalesce(payment.amount, 0))
-        second_payable = (
-            table.amount_second_currency * Abs(table.debit - table.credit)
-            / (table.debit - table.credit)) - Sum(Coalesce(payment.amount, 0))
-        seconde_receivable = (
-            table.amount_second_currency * Abs(table.credit - table.debit)
-            / (table.credit - table.debit)) - Sum(Coalesce(payment.amount, 0))
-        query = query_table.select(table.id,
-            where=account.kind.in_(['payable', 'receivable']),
-            group_by=(table.id, account.kind, table.second_currency),
-            having=Operator(
-                Case((table.second_currency == None,
-                        Case((account.kind == 'payable', main_payable),
-                            else_=main_receivable)),
-                    else_=Case((account.kind == 'payable', second_payable),
-                        else_=seconde_receivable)),
-                getattr(cls, name).sql_format(value)))
+
+        main_payable = ((table.credit - table.debit)
+            - Sum(Coalesce(payment.amount, 0)))
+        main_receivable = ((table.credit - table.credit)
+            - Sum(Coalesce(payment.amount, 0)))
+
+        second_payable = ((table.amount_second_currency
+                * Abs(table.debit - table.credit)
+                / (table.debit - table.credit))
+            - Sum(Coalesce(payment.amount, 0)))
+        second_receivable = ((table.amount_second_currency
+                * Abs(table.credit - table.debit)
+                / (table.credit - table.debit))
+            - Sum(Coalesce(payment.amount, 0)))
+        amount = Case((table.second_currency == None,
+                Case((account.kind == 'payable', main_payable),
+                    else_=main_receivable)),
+            else_=Case((account.kind == 'payable', second_payable),
+                else_=second_receivable))
+        value = cls.payment_amount.sql_format(value)
+
+        query = table.join(payment, type_='LEFT',
+            condition=(table.id == payment.line) & (payment.state != 'failed')
+            ).join(account, condition=table.account == account.id
+                ).select(table.id,
+                    where=account.kind.in_(['payable', 'receivable']),
+                    group_by=(table.id, account.kind, table.second_currency),
+                    having=Operator(amount, value)
+                    )
         return [('id', 'in', query)]
 
     def get_payment_kind(self, name):
