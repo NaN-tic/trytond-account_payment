@@ -12,7 +12,9 @@ def register():
         Payment,
         MoveLine,
         ProcessPaymentStart,
+        PayLineStart,
         module='account_payment', type_='model')
     Pool.register(
         ProcessPayment,
+        PayLine,
         module='account_payment', type_='wizard')

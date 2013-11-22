@@ -48,11 +48,11 @@ class Group(ModelSQL, ModelView):
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
-                Eval('context', {}).get('company', 0)),
+                Eval('context', {}).get('company', -1)),
             ])
     journal = fields.Many2One('account.payment.journal', 'Journal',
         required=True, readonly=True, domain=[
-            ('company', '=', Eval('company', 0)),
+            ('company', '=', Eval('company', -1)),
             ],
         depends=['company'])
     kind = fields.Selection(KINDS, 'Kind', required=True, readonly=True)
@@ -96,12 +96,12 @@ class Payment(Workflow, ModelSQL, ModelView):
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, states=_STATES, domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
-                Eval('context', {}).get('company', 0)),
+                Eval('context', {}).get('company', -1)),
             ],
         depends=_DEPENDS)
     journal = fields.Many2One('account.payment.journal', 'Journal',
         required=True, states=_STATES, domain=[
-            ('company', '=', Eval('company', 0)),
+            ('company', '=', Eval('company', -1)),
             ],
         depends=_DEPENDS + ['company'])
     currency = fields.Function(fields.Many2One('currency.currency', 'Currency',
@@ -147,7 +147,7 @@ class Payment(Workflow, ModelSQL, ModelView):
             'required': Eval('state').in_(['processing', 'succeeded']),
             },
         domain=[
-            ('company', '=', Eval('company', 0)),
+            ('company', '=', Eval('company', -1)),
             ],
         depends=['state', 'company'])
     state = fields.Selection([
@@ -194,6 +194,12 @@ class Payment(Workflow, ModelSQL, ModelView):
     @staticmethod
     def default_kind():
         return 'payable'
+
+    @staticmethod
+    def default_date():
+        pool = Pool()
+        Date = pool.get('ir.date')
+        return Date.today()
 
     @staticmethod
     def default_state():
@@ -276,7 +282,7 @@ class Payment(Workflow, ModelSQL, ModelView):
 
 
 class ProcessPaymentStart(ModelView):
-    'Process Payment Start'
+    'Process Payment'
     __name__ = 'account.payment.process.start'
 
 
@@ -324,6 +330,7 @@ class ProcessPayment(Wizard):
                 group.save()
                 groups.append(group)
                 return group
+            grouped_payments = list(grouped_payments)
             Payment.process(list(grouped_payments), group)
 
         return action, {

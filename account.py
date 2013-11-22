@@ -5,13 +5,15 @@ from sql.conditionals import Case, Coalesce
 from sql.functions import Abs
 
 from trytond.pool import Pool, PoolMeta
-from trytond.model import fields
+from trytond.model import ModelView, fields
 from trytond.pyson import Eval, If, Bool
+from trytond.wizard import Wizard, StateView, StateAction, Button
+from trytond.transaction import Transaction
 
 from .payment import KINDS
 
 __metaclass__ = PoolMeta
-__all__ = ['MoveLine']
+__all__ = ['MoveLine', 'PayLine', 'PayLineStart']
 
 
 class MoveLine:
@@ -113,3 +115,56 @@ class MoveLine:
             default = default.copy()
         default.setdefault('payments', None)
         return super(MoveLine, cls).copy(lines, default=default)
+
+
+class PayLineStart(ModelView):
+    'Pay Line'
+    __name__ = 'account.move.line.pay.start'
+    journal = fields.Many2One('account.payment.journal', 'Journal',
+        required=True, domain=[
+            ('company', '=', Eval('context', {}).get('company', -1)),
+            ])
+
+
+class PayLine(Wizard):
+    'Pay Line'
+    __name__ = 'account.move.line.pay'
+    start = StateView('account.move.line.pay.start',
+        'account_payment.move_line_pay_start_view_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Pay', 'pay', 'tryton-ok', default=True),
+            ])
+    pay = StateAction('account_payment.act_payment_form')
+
+    def get_payment(self, line):
+        pool = Pool()
+        Payment = pool.get('account.payment')
+
+        if (line.debit > 0) or (line.credit < 0):
+            kind = 'receivable'
+        else:
+            kind = 'payable'
+
+        return Payment(
+            journal=self.start.journal,
+            party=line.party,
+            kind=kind,
+            amount=line.payment_amount,
+            line=line,
+            description=line.description,
+            )
+
+    def do_pay(self, action):
+        pool = Pool()
+        Line = pool.get('account.move.line')
+        Payment = pool.get('account.payment')
+
+        lines = Line.browse(Transaction().context['active_ids'])
+
+        payments = []
+        for line in lines:
+            payments.append(self.get_payment(line))
+        payments = Payment.create([p._save_values for p in payments])
+        return action, {
+            'res_id': [p.id for p in payments],
+            }

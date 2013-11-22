@@ -25,14 +25,17 @@ requires = []
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
         requires.append('trytond_%s >= %s.%s, < %s.%s' %
-            (dep, major_version, minor_version, major_version,
-                minor_version + 1))
+                (dep, major_version, minor_version, major_version,
+                    minor_version + 1))
 requires.append('trytond >= %s.%s, < %s.%s' %
-    (major_version, minor_version, major_version, minor_version + 1))
+        (major_version, minor_version, major_version, minor_version + 1))
+
+tests_require = ['proteus >= %s.%s, < %s.%s' %
+    (major_version, minor_version, major_version, minor_version + 1)]
 
 setup(name='trytond_account_payment',
     version=info.get('version', '0.0.1'),
-    description='Tryton module with Account Payment',
+    description='Tryton module for payment',
     long_description=read('README'),
     author='Tryton',
     url='http://www.tryton.org/',
@@ -45,15 +48,16 @@ setup(name='trytond_account_payment',
         ],
     package_data={
         'trytond.modules.account_payment': (info.get('xml', [])
-            + ['tryton.cfg', 'view/*.xml', 'locale/*.po']),
+            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', '*.odt',
+                'icons/*.svg']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
+        'Framework :: Tryton',
         'Intended Audience :: Developers',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Legal Industry',
-        'Intended Audience :: Manufacturing',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Natural Language :: Bulgarian',
         'Natural Language :: Catalan',
@@ -63,11 +67,13 @@ setup(name='trytond_account_payment',
         'Natural Language :: French',
         'Natural Language :: German',
         'Natural Language :: Russian',
+        'Natural Language :: Slovenian',
         'Natural Language :: Spanish',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Topic :: Office/Business',
+        'Topic :: Office/Business :: Financial :: Accounting',
         ],
     license='GPL-3',
     install_requires=requires,
@@ -78,4 +84,5 @@ setup(name='trytond_account_payment',
     """,
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
+    tests_require=tests_require,
     )
