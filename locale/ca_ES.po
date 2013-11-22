@@ -22,6 +22,14 @@ msgctxt "field:account.move.line,payments:"
 msgid "Payments"
 msgstr "Pagaments"
 
+msgctxt "field:account.move.line.pay.start,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:account.move.line.pay.start,journal:"
+msgid "Journal"
+msgstr "Diari"
+
 msgctxt "field:account.payment,amount:"
 msgid "Amount"
 msgstr "Import"
@@ -182,6 +190,10 @@ msgctxt "field:account.payment.process.start,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "model:account.move.line.pay.start,name:"
+msgid "Pay Line"
+msgstr "Paga Línia"
+
 msgctxt "model:account.payment,name:"
 msgid "Payment"
 msgstr "Pagament"
@@ -195,14 +207,26 @@ msgid "Payment Journal"
 msgstr "Diari de pagament"
 
 msgctxt "model:account.payment.process.start,name:"
-msgid "Process Payment Start"
+msgid "Process Payment"
 msgstr "Inici de Procesa pagaments"
 
 msgctxt "model:ir.action,name:act_move_line_form"
 msgid "Lines to Pay"
 msgstr "Línies a pagar"
 
+msgctxt "model:ir.action,name:act_pay_line"
+msgid "Pay Lines"
+msgstr "Paga Línies"
+
 msgctxt "model:ir.action,name:act_payment_form"
+msgid "Payments"
+msgstr "Pagaments"
+
+msgctxt "model:ir.action,name:act_payment_form_group_open"
+msgid "Payments"
+msgstr "Pagaments"
+
+msgctxt "model:ir.action,name:act_payment_form_line_relate"
 msgid "Payments"
 msgstr "Pagaments"
 
@@ -363,6 +387,14 @@ msgstr "A cobrar"
 msgctxt "selection:account.payment.journal,process_method:"
 msgid "Manual"
 msgstr "Manual"
+
+msgctxt "wizard_button:account.move.line.pay,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:account.move.line.pay,start,pay:"
+msgid "Pay"
+msgstr "Paga"
 
 msgctxt "wizard_button:account.payment.process,start,end:"
 msgid "Cancel"

@@ -195,7 +195,7 @@ msgid "Payment Journal"
 msgstr "Diario de Pagos"
 
 msgctxt "model:account.payment.process.start,name:"
-msgid "Process Payment Start"
+msgid "Process Payment"
 msgstr "Procesar Pagos"
 
 msgctxt "model:ir.action,name:act_move_line_form"
