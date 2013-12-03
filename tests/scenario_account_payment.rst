@@ -20,7 +20,7 @@ Install account_invoice::
     >>> Module = Model.get('ir.module.module')
     >>> account_payment_module, = Module.find(
     ...     [('name', '=', 'account_payment')])
-    >>> account_payment_module.click('install')
+    >>> Module.install([account_payment_module.id], config.context)
     >>> Wizard('ir.module.module.install_upgrade').execute('upgrade')
 
 Create company::
@@ -118,10 +118,15 @@ Create payable move::
     >>> Move = Model.get('account.move')
     >>> move = Move()
     >>> move.journal = expense
-    >>> line = move.lines.new(account=payable, party=supplier,
-    ...     credit=Decimal(50))
-    >>> line = move.lines.new(account=expense, debit=Decimal(50))
-    >>> move.click('post')
+    >>> line = move.lines.new() 
+    >>> line.account=payable
+    >>> line.party=supplier
+    >>> line.credit=Decimal(50)
+    >>> line2 = move.lines.new()
+    >>> line2.account=expense
+    >>> line2.debit=Decimal(50)
+    >>> move.save()
+    >>> Move.post([move.id], config.context)
 
 Partially pay line::
 
@@ -136,7 +141,9 @@ Partially pay line::
     >>> payment.amount == Decimal(50)
     True
     >>> payment.amount = Decimal(20)
-    >>> payment.click('approve')
+    >>> payment.save()
+    >>> Payment.approve([payment.id], config.context)
+    >>> payment.reload()
     >>> payment.state
     u'approved'
     >>> process_payment = Wizard('account.payment.process', [payment])
@@ -156,14 +163,16 @@ Partially fail to pay the remaining::
     >>> payment, = Payment.find([('state', '=', 'draft')])
     >>> payment.amount == Decimal(30)
     True
-    >>> payment.click('approve')
+    >>> Payment.approve([payment.id], config.context)
+    >>> payment.reload()
     >>> process_payment = Wizard('account.payment.process', [payment])
     >>> process_payment.execute('process')
     >>> line.reload()
     >>> line.payment_amount == Decimal(0)
     True
     >>> payment.reload()
-    >>> payment.click('fail')
+    >>> Payment.fail([payment.id], config.context)
+    >>> payment.reload()
     >>> payment.state
     u'failed'
     >>> line.reload()
