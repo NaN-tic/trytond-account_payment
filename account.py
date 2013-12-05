@@ -1,5 +1,6 @@
 #This file is part of Tryton.  The COPYRIGHT file at the top level of
 #this repository contains the full copyright notices and license terms.
+from decimal import Decimal
 from sql.aggregate import Sum
 from sql.conditionals import Case, Coalesce
 from sql.functions import Abs
@@ -163,8 +164,11 @@ class PayLine(Wizard):
 
         payments = []
         for line in lines:
+            if line.payment_amount == Decimal('0.0'):
+                continue
             payments.append(self.get_payment(line))
-        payments = Payment.create([p._save_values for p in payments])
+        if payments:
+            payments = Payment.create([p._save_values for p in payments])
         return action, {
             'res_id': [p.id for p in payments],
             }
