@@ -72,7 +72,7 @@ class MoveLine:
 
         main_payable = ((table.credit - table.debit)
             - Sum(Coalesce(payment.amount, 0)))
-        main_receivable = ((table.credit - table.credit)
+        main_receivable = ((table.debit - table.credit)
             - Sum(Coalesce(payment.amount, 0)))
 
         second_payable = ((table.amount_second_currency
