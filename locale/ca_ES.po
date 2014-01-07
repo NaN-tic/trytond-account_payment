@@ -388,6 +388,70 @@ msgctxt "selection:account.payment.journal,process_method:"
 msgid "Manual"
 msgstr "Manual"
 
+msgctxt "view:account.move.line.pay.start:"
+msgid "Pay Line"
+msgstr "Paga Línia"
+
+msgctxt "view:account.move.line:"
+msgid "Account Move Lines"
+msgstr "Apunts contables"
+
+msgctxt "view:account.payment.group:"
+msgid "Payment Group"
+msgstr "Grup de pagament"
+
+msgctxt "view:account.payment.group:"
+msgid "Payment Groups"
+msgstr "Grups de pagaments"
+
+msgctxt "view:account.payment.journal:"
+msgid "Payment Journal"
+msgstr "Diari de pagament"
+
+msgctxt "view:account.payment.journal:"
+msgid "Payment Journals"
+msgstr "Diaris de pagament"
+
+msgctxt "view:account.payment.process.start:"
+msgid "Process Payments"
+msgstr "Processa Pagaments"
+
+msgctxt "view:account.payment.process.start:"
+msgid "Process Payments?"
+msgstr "Processa Pagaments?"
+
+msgctxt "view:account.payment:"
+msgid "Approve"
+msgstr "Aprova"
+
+msgctxt "view:account.payment:"
+msgid "Description"
+msgstr "Descripció"
+
+msgctxt "view:account.payment:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "view:account.payment:"
+msgid "Fail"
+msgstr "Fallat"
+
+msgctxt "view:account.payment:"
+msgid "Other Info"
+msgstr "Mes informació"
+
+msgctxt "view:account.payment:"
+msgid "Payment"
+msgstr "Pagament"
+
+msgctxt "view:account.payment:"
+msgid "Payments"
+msgstr "Pagaments"
+
+msgctxt "view:account.payment:"
+msgid "Succeed"
+msgstr "Amb èxit"
+
 msgctxt "wizard_button:account.move.line.pay,start,end:"
 msgid "Cancel"
 msgstr "Cancel·la"

@@ -22,6 +22,14 @@ msgctxt "field:account.move.line,payments:"
 msgid "Payments"
 msgstr "Pagos"
 
+msgctxt "field:account.move.line.pay.start,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:account.move.line.pay.start,journal:"
+msgid "Journal"
+msgstr "Diario"
+
 msgctxt "field:account.payment,amount:"
 msgid "Amount"
 msgstr "Importe"
@@ -182,6 +190,10 @@ msgctxt "field:account.payment.process.start,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "model:account.move.line.pay.start,name:"
+msgid "Pay Line"
+msgstr "Pagar Línea"
+
 msgctxt "model:account.payment,name:"
 msgid "Payment"
 msgstr "Pago"
@@ -202,7 +214,19 @@ msgctxt "model:ir.action,name:act_move_line_form"
 msgid "Lines to Pay"
 msgstr "Líneas a pagar"
 
+msgctxt "model:ir.action,name:act_pay_line"
+msgid "Pay Lines"
+msgstr "Pagar Líneas"
+
 msgctxt "model:ir.action,name:act_payment_form"
+msgid "Payments"
+msgstr "Pagos"
+
+msgctxt "model:ir.action,name:act_payment_form_group_open"
+msgid "Payments"
+msgstr "Pagos"
+
+msgctxt "model:ir.action,name:act_payment_form_line_relate"
 msgid "Payments"
 msgstr "Pagos"
 
@@ -282,7 +306,7 @@ msgstr "Sequencia de grupos de pagos por defecto"
 
 msgctxt "model:ir.sequence.type,name:sequence_type_account_payment_group"
 msgid "Account Payment Group"
-msgstr ""
+msgstr "Grupo de Pagos"
 
 msgctxt "model:ir.ui.menu,name:menu_move_line_form"
 msgid "Lines to Pay"
@@ -363,6 +387,78 @@ msgstr "A cobrar"
 msgctxt "selection:account.payment.journal,process_method:"
 msgid "Manual"
 msgstr "Manual"
+
+msgctxt "view:account.move.line.pay.start:"
+msgid "Pay Line"
+msgstr "Pagar linea"
+
+msgctxt "view:account.move.line:"
+msgid "Account Move Lines"
+msgstr "Líneas de los movimientos"
+
+msgctxt "view:account.payment.group:"
+msgid "Payment Group"
+msgstr "Grupo de Pagos"
+
+msgctxt "view:account.payment.group:"
+msgid "Payment Groups"
+msgstr "Grupos de Pagos"
+
+msgctxt "view:account.payment.journal:"
+msgid "Payment Journal"
+msgstr "Diario de Pagos"
+
+msgctxt "view:account.payment.journal:"
+msgid "Payment Journals"
+msgstr "Diarios de Pagos"
+
+msgctxt "view:account.payment.process.start:"
+msgid "Process Payments"
+msgstr "Procesar Pagos"
+
+msgctxt "view:account.payment.process.start:"
+msgid "Process Payments?"
+msgstr "Procesar Pagos?"
+
+msgctxt "view:account.payment:"
+msgid "Approve"
+msgstr "Aprobar"
+
+msgctxt "view:account.payment:"
+msgid "Description"
+msgstr "Descripción"
+
+msgctxt "view:account.payment:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "view:account.payment:"
+msgid "Fail"
+msgstr "Fallado"
+
+msgctxt "view:account.payment:"
+msgid "Other Info"
+msgstr "Otra información"
+
+msgctxt "view:account.payment:"
+msgid "Payment"
+msgstr "Pago"
+
+msgctxt "view:account.payment:"
+msgid "Payments"
+msgstr "Pagos"
+
+msgctxt "view:account.payment:"
+msgid "Succeed"
+msgstr "Con éxito"
+
+msgctxt "wizard_button:account.move.line.pay,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:account.move.line.pay,start,pay:"
+msgid "Pay"
+msgstr "Pagar"
 
 msgctxt "wizard_button:account.payment.process,start,end:"
 msgid "Cancel"
