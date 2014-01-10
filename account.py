@@ -140,6 +140,7 @@ class PayLine(Wizard):
     def get_payment(self, line):
         pool = Pool()
         Payment = pool.get('account.payment')
+        Date = pool.get('ir.date')
 
         if (line.debit > 0) or (line.credit < 0):
             kind = 'receivable'
@@ -152,6 +153,7 @@ class PayLine(Wizard):
             kind=kind,
             amount=line.payment_amount,
             line=line,
+            date=line.maturity_date or Date.today(),
             description=line.description,
             )
 
