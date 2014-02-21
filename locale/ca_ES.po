@@ -84,7 +84,7 @@ msgstr "Línia"
 
 msgctxt "field:account.payment,party:"
 msgid "Party"
-msgstr "Tercers"
+msgstr "Tercer"
 
 msgctxt "field:account.payment,rec_name:"
 msgid "Name"
