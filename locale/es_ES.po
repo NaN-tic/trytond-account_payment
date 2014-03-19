@@ -216,7 +216,7 @@ msgstr "Líneas a pagar"
 
 msgctxt "model:ir.action,name:act_pay_line"
 msgid "Pay Lines"
-msgstr "Pagar Líneas"
+msgstr "Pagar líneas"
 
 msgctxt "model:ir.action,name:act_payment_form"
 msgid "Payments"
@@ -232,7 +232,7 @@ msgstr "Pagos"
 
 msgctxt "model:ir.action,name:act_payment_group_form"
 msgid "Payment Groups"
-msgstr "Grupos de Pagos"
+msgstr "Grupos de pagos"
 
 msgctxt "model:ir.action,name:act_payment_journal_form"
 msgid "Payment Journals"
@@ -252,7 +252,7 @@ msgstr "Pagos"
 
 msgctxt "model:ir.action.act_window,name:act_payment_group_form"
 msgid "Payment Groups"
-msgstr "Grupos de Pagos"
+msgstr "Grupos de pagos"
 
 msgctxt "model:ir.action.act_window,name:act_payment_journal_form"
 msgid "Payment Journals"
@@ -322,7 +322,7 @@ msgstr "Pagos"
 
 msgctxt "model:ir.ui.menu,name:menu_payment_group_form"
 msgid "Payment Groups"
-msgstr "Grupos de Pagos"
+msgstr "Grupos de pagos"
 
 msgctxt "model:ir.ui.menu,name:menu_payment_journal_form"
 msgid "Payment Journals"
@@ -396,13 +396,17 @@ msgctxt "view:account.move.line:"
 msgid "Account Move Lines"
 msgstr "Líneas de los movimientos"
 
+msgctxt "view:account.move.line:"
+msgid "Pay Lines"
+msgstr "Pagar líneas"
+
 msgctxt "view:account.payment.group:"
 msgid "Payment Group"
 msgstr "Grupo de Pagos"
 
 msgctxt "view:account.payment.group:"
 msgid "Payment Groups"
-msgstr "Grupos de Pagos"
+msgstr "Grupos de pagos"
 
 msgctxt "view:account.payment.journal:"
 msgid "Payment Journal"
