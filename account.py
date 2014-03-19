@@ -1,6 +1,5 @@
 #This file is part of Tryton.  The COPYRIGHT file at the top level of
 #this repository contains the full copyright notices and license terms.
-from decimal import Decimal
 from sql.aggregate import Sum
 from sql.conditionals import Case, Coalesce
 from sql.functions import Abs
@@ -40,6 +39,15 @@ class MoveLine:
                 (None, ''),
                 ] + KINDS, 'Payment Kind'), 'get_payment_kind',
         searcher='search_payment_kind')
+
+    @classmethod
+    def __setup__(cls):
+        super(MoveLine, cls).__setup__()
+        cls._buttons.update({
+                'pay': {
+                    'invisible': ~Eval('payment_kind').in_(dict(KINDS).keys()),
+                    },
+                })
 
     @classmethod
     def get_payment_amount(cls, lines, name):
@@ -117,6 +125,11 @@ class MoveLine:
         default.setdefault('payments', None)
         return super(MoveLine, cls).copy(lines, default=default)
 
+    @classmethod
+    @ModelView.button_action('account_payment.act_pay_line')
+    def pay(cls, lines):
+        pass
+
 
 class PayLineStart(ModelView):
     'Pay Line'
@@ -140,7 +153,6 @@ class PayLine(Wizard):
     def get_payment(self, line):
         pool = Pool()
         Payment = pool.get('account.payment')
-        Date = pool.get('ir.date')
 
         if (line.debit > 0) or (line.credit < 0):
             kind = 'receivable'
@@ -153,8 +165,6 @@ class PayLine(Wizard):
             kind=kind,
             amount=line.payment_amount,
             line=line,
-            date=line.maturity_date or Date.today(),
-            description=line.description,
             )
 
     def do_pay(self, action):
@@ -166,11 +176,8 @@ class PayLine(Wizard):
 
         payments = []
         for line in lines:
-            if line.payment_amount == Decimal('0.0'):
-                continue
             payments.append(self.get_payment(line))
-        if payments:
-            payments = Payment.create([p._save_values for p in payments])
+        payments = Payment.create([p._save_values for p in payments])
         return action, {
             'res_id': [p.id for p in payments],
             }

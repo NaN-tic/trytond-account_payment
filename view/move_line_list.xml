@@ -13,4 +13,6 @@ this repository contains the full copyright notices and license terms. -->
     <field name="debit"/>
     <field name="credit"/>
     <field name="amount_second_currency"/>
+    <field name="payment_kind" tree_invisible="1"/>
+    <button name="pay" string="Pay Lines" tree_invisible="1"/>
 </tree>

@@ -46,7 +46,7 @@ class Group(ModelSQL, ModelView):
     _rec_name = 'reference'
     reference = fields.Char('Reference', required=True, readonly=True)
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, domain=[
+        readonly=True, select=True, domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
                 Eval('context', {}).get('company', -1)),
             ])
@@ -161,6 +161,7 @@ class Payment(Workflow, ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(Payment, cls).__setup__()
+        cls._order.insert(0, ('date', 'DESC'))
         cls._error_messages.update({
                 'delete_draft': ('Payment "%s" must be in draft before '
                     'deletion.'),
@@ -175,15 +176,19 @@ class Payment(Workflow, ModelSQL, ModelView):
         cls._buttons.update({
                 'draft': {
                     'invisible': Eval('state') != 'approved',
+                    'icon': 'tryton-go-previous',
                     },
                 'approve': {
                     'invisible': Eval('state') != 'draft',
+                    'icon': 'tryton-go-next',
                     },
                 'succeed': {
                     'invisible': Eval('state') != 'processing',
+                    'icon': 'tryton-ok',
                     },
                 'fail': {
                     'invisible': Eval('state') != 'processing',
+                    'icon': 'tryton-cancel',
                     },
                 })
 
