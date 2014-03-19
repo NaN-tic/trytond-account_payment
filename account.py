@@ -79,24 +79,11 @@ class MoveLine:
         payment = Payment.__table__()
         account = Account.__table__()
 
-        main_payable = ((table.credit - table.debit)
-            - Sum(Coalesce(payment.amount, 0)))
-        main_receivable = ((table.debit - table.credit)
-            - Sum(Coalesce(payment.amount, 0)))
-
-        second_payable = ((table.amount_second_currency
-                * Abs(table.debit - table.credit)
-                / (table.debit - table.credit))
-            - Sum(Coalesce(payment.amount, 0)))
-        second_receivable = ((table.amount_second_currency
-                * Abs(table.credit - table.debit)
-                / (table.credit - table.debit))
-            - Sum(Coalesce(payment.amount, 0)))
-        amount = Case((table.second_currency == None,
-                Case((account.kind == 'payable', main_payable),
-                    else_=main_receivable)),
-            else_=Case((account.kind == 'payable', second_payable),
-                else_=second_receivable))
+        payment_amount = Sum(Coalesce(payment.amount, 0))
+        main_amount = Abs(table.credit - table.debit) - payment_amount
+        second_amount = Abs(table.amount_second_currency) - payment_amount
+        amount = Case((table.second_currency == None, main_amount),
+            else_=second_amount)
         value = cls.payment_amount.sql_format(value)
 
         query = table.join(payment, type_='LEFT',
