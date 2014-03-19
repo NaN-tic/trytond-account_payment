@@ -216,7 +216,7 @@ msgstr "Línies a pagar"
 
 msgctxt "model:ir.action,name:act_pay_line"
 msgid "Pay Lines"
-msgstr "Paga Línies"
+msgstr "Paga línies"
 
 msgctxt "model:ir.action,name:act_payment_form"
 msgid "Payments"
@@ -395,6 +395,10 @@ msgstr "Paga Línia"
 msgctxt "view:account.move.line:"
 msgid "Account Move Lines"
 msgstr "Apunts contables"
+
+msgctxt "view:account.move.line:"
+msgid "Pay Lines"
+msgstr "Paga línies"
 
 msgctxt "view:account.payment.group:"
 msgid "Payment Group"
