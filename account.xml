@@ -59,6 +59,11 @@ this repository contains the full copyright notices and license terms. -->
             <field name="wiz_name">account.move.line.pay</field>
             <field name="model">account.move.line</field>
         </record>
+        <record model="ir.action.keyword" id="act_pay_line_keyword1">
+            <field name="keyword">form_action</field>
+            <field name="model">account.move.line,-1</field>
+            <field name="action" ref="act_pay_line"/>
+        </record>
 
         <record model="ir.model.button" id="move_line_pay_button">
             <field name="name">pay</field>
